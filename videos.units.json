@@ -1,0 +1,111 @@
+[
+  {
+    "subject": "Basic Electrical Engineering",
+    "unit": {
+      "number": 1,
+      "name": "DC Circuits",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Electrical Engineering",
+    "unit": {
+      "number": 2,
+      "name": "AC Circuits",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Electrical Engineering",
+    "unit": {
+      "number": 3,
+      "name": "Transformers",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Electrical Engineering",
+    "unit": {
+      "number": 4,
+      "name": "Electrical Machines",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Electrical Engineering",
+    "unit": {
+      "number": 5,
+      "name": "Power Converters",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Electrical Engineering",
+    "unit": {
+      "number": 6,
+      "name": "Electrical Installations",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Civil Engineering",
+    "unit": {
+      "number": 1,
+      "name": "Introduction to objective, scope and outcome the subject",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Civil Engineering",
+    "unit": {
+      "number": 2,
+      "name": "Introduction",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Civil Engineering",
+    "unit": {
+      "number": 3,
+      "name": "Surveying",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Civil Engineering",
+    "unit": {
+      "number": 4,
+      "name": "Buildings",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Civil Engineering",
+    "unit": {
+      "number": 5,
+      "name": "Transportation",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  },
+  {
+    "subject": "Basic Civil Engineering",
+    "unit": {
+      "number": 6,
+      "name": "Environmental Engineering",
+      "totalVideos": 8,
+      "totalUnits": 6
+    }
+  }
+
+]
