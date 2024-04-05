@@ -9,7 +9,6 @@ export default function Result(props) {
 
     const again = () => {
         window.location.reload()
-
     }
 
     return (

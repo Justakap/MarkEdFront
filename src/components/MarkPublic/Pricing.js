@@ -87,7 +87,7 @@ export default function Pricing() {
                                 </li>
 
                             </ul>
-                            <Link to="/home"
+                            <Link to="/payment?id=1"
                     class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-purple-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-purple-900">Get
                     started</Link>
                         </div>
@@ -127,7 +127,7 @@ export default function Pricing() {
                                     <span>Grevience Readdresal Portal <span class="font-semibold"></span></span>
                                 </li>
                             </ul>
-                            <Link to=""
+                            <Link to="/payment?id=2"
                     class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-purple-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-purple-900">Get
                     started</Link>
                         </div>

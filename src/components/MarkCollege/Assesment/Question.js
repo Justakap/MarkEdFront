@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Result from './Result';
@@ -45,7 +46,7 @@ export default function Question(props) {
 
     // eslint-disable-next-line
     const currentAssesment = assessments.find(q => q.subject == subject && q.number == number)?._id;
-
+// console.log(currentAssesment)
     useEffect(() => {
         // Log the updated state whenever selectedAnswer changes
         console.log(selectedAnswer);
@@ -56,9 +57,9 @@ export default function Question(props) {
     const lastIndex = currentPage * recordperPage;
     const firstIndex = lastIndex - recordperPage;
     // eslint-disable-next-line
-    const records = questions.filter((e) => (e.AssesmentId == currentAssesment)).slice(firstIndex, lastIndex);
+    const records = questions.filter((e) => (e.AssessmentId === currentAssesment)).slice(firstIndex, lastIndex);
     // eslint-disable-next-line
-    const nPage = Math.ceil(questions.filter((e) => (e.AssesmentId == currentAssesment)).length / recordperPage);
+    const nPage = Math.ceil(questions.filter((e) => (e.AssessmentId == currentAssesment)).length / recordperPage);
 
     const handleRadioChange = (e, questionId) => {
         const selectedValue = e.target.value;
@@ -102,6 +103,7 @@ export default function Question(props) {
             axios.post(`${process.env.REACT_APP_API_BASE_URL}/assesment/result`, {
                 marks: 100 * (marks / nPage), name, currentAssesment, status: true
             })
+           
                 .then(res => {
                     // eslint-disable-next-line
                     if (res.data == "added") {
@@ -126,7 +128,7 @@ export default function Question(props) {
     };
 
 
-    const [time, setTime] = useState({ minutes: 0, seconds: 10 });
+    const [time, setTime] = useState({ minutes: 10, seconds: 1 });
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -134,18 +136,21 @@ export default function Question(props) {
                 const newSeconds = prevTime.seconds - 1;
                 const newMinutes = newSeconds < 0 ? prevTime.minutes - 1 : prevTime.minutes;
                 const updatedSeconds = newSeconds < 0 ? 59 : newSeconds;
-
-                if (newMinutes <= 0) {
-                    clearInterval(timer); // Stop the timer when time is up
+    
+                // If both minutes and seconds are zero, submit the test
+                if (newMinutes === 0 && newSeconds === 0) {
+                    clearInterval(timer); // Stop the timer
+                    // showResult(); // Submit the test
                 }
-
+    
                 return { minutes: newMinutes, seconds: updatedSeconds };
             });
         }, 1000);
-
+    
+        // Cleanup the interval when the component unmounts or when the dependency array changes
         return () => clearInterval(timer); // Cleanup the interval on component unmount
-    }, []);
-
+    }, []); // Empty dependency array means this effect runs once after the initial render
+    
     return (
         <>
 

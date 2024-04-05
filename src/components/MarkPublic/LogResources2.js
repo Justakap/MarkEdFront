@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
-export default function Resouces2() {
+export default function LogResources2() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const param1 = queryParams.get('branch');
@@ -114,3 +114,5 @@ export default function Resouces2() {
         </>
     );
 }
+
+    

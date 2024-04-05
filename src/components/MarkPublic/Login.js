@@ -1,99 +1,117 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-export default function Login() {
-axios.defaults.withCredentials=true;
-  const history = useNavigate();
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  async function submit(e) {
-    e.preventDefault()
-    try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, {
-        email, password
-      })
-        .then(res => {    
-          if (res.data.login) {
-            history("/home")
-          }
-          // eslint-disable-next-line
-          else if (res.data == "incorrect") {
-            alert("Password Do not Match")
-          }
-          // eslint-disable-next-line
-          else if (res.data == "notexist") {
-            alert("Please Sign In first")
-          }
+import { Link, useNavigate } from 'react-router-dom';
 
-        }).catch(e => {
-          alert("Server Error")
-          console.log(e)
-          console.error('Axios Error:', e);
-        })
+export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  async function submit(e) {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, {
+        email,
+        password
+      });
+      if (response.data.auth) {
+        console.log(response.data.user)
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('token', JSON.stringify(response.data.auth));
+        navigate("/home");
+      } else if (response.data === "incorrect") {
+        alert("Password does not match");
+      } else if (response.data === "notexist") {
+        alert("User does not exist");
+      }
     } catch (error) {
-      console.log(error)
+      alert("Server Error. Please try again later.");
+      console.error('Axios Error:', error);
     }
   }
+
   return (
     <>
-      {/* <form action="" method="post"> */}
+      
+      <div className="max-w-2xl mx-auto">
 
+        <div className="mt-8"></div>
+        <div className="m-auto bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
+          <form onSubmit={submit} className=" m-auto ">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center mb-3">
+              Log in to our platform
+            </h3>
+            <div>
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+              >
+                Your email
+              </label>
+              <input type="email" onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder='Enter Email Address' required />
+            </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
+              >
+                Your password
+              </label>
 
-
-
-      <section className="bg-slate-200">
-        <div className="container h-100 ">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-lg-12 col-xl-11">
-              <div className="card text-black rounded-md">
-                <div className="card-body p-md-5">
-                  <div className="row justify-content-center">
-                    <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                      <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
-
-                      <form className="mx-1 mx-md-4" method='post' >
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-
-                            <input className="rounded-xl form-control" type="email" onChange={(e) => { setEmail(e.target.value) }} name="" id="" />
-                            <label className="form-label" htmlFor="form3Example3c">
-                              Your Email
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-
-
-                            <input className="rounded-xl form-control" type="text" onChange={(e) => { setPassword(e.target.value) }} name="" id="" />
-                            <label className="form-label" htmlFor="form3Example4c">
-                              Password
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-
-                          <input className="btn btn-outline-primary btn-lg" type="submit" onClick={submit} />
-
-
-                        </div>
-                      </form>
-                    </div>
-
-                  </div>
+              <input type="password" name='password' onChange={(e) => setPassword(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder='Enter Password' required /> <br />
+            </div>
+            <div className="flex items-start">
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="remember"
+                    aria-describedby="remember"
+                    type="checkbox"
+                    className="bg-gray-50 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                    required=""
+                  />
+                </div>
+                <div className="text-sm ml-3">
+                  <label
+                    htmlFor="remember"
+                    className="font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Remember me
+                  </label>
                 </div>
               </div>
+              <Link
+                to=""
+                className="text-sm text-blue-700 hover:underline ml-auto dark:text-blue-500"
+              >
+                Lost Password?
+              </Link>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* </form> */}
+            <button
+              type="submit"
+              className="w-full my-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Login to your account
+            </button>
+            <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+              Not registered?{" "}
+              <Link
+                to="/signup"
+                className="text-blue-700 hover:underline dark:text-blue-500"
+              >
+                Create account
+              </Link>
+            </div>
+          </form>
+        </div>
+        <div className="mt-8"></div>
+
+      </div>
 
     </>
+
+
+
   );
 }

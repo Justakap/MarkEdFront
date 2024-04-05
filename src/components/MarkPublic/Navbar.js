@@ -23,8 +23,10 @@ export default function Navbar() {
             </Link>
             <Link to="/Resources" className="text-white hover:text-gray-900">
               Resources
+            </Link>           
+            <Link to="/Queries" className="text-white hover:text-gray-900">
+            Queries
             </Link>
-           
             <Link to="/About" className="text-white hover:text-gray-900">
               About
             </Link>
@@ -71,6 +73,9 @@ export default function Navbar() {
           Assesment
         </Link>
         <Link to="/Resources" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+          Resources
+        </Link>
+        <Link to="/Queries" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
           Resources
         </Link>
 

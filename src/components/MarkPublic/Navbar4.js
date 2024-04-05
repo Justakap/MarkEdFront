@@ -17,31 +17,33 @@ export default function Navbar() {
 
                     <div className="flex-shrink-0">
                         <Link to="/home" className="flex items-center text-lg font-bold text-white hover:text-gray-900">
-                            <img
-                  className="w-28 h-8"
-                src={markLogo}
-                alt="Better Dev Logo"
-              />
-                      
+                            {/* <img
+                                className="w-28 h-8"
+                                src={markLogo}
+                                alt="Better Dev Logo"
+                            /> */}
+                         <span className=' text-2xl'>MarkX  </span> <span className=' text-5xl font-extrabold'>⁺</span>     
+
                         </Link>
                     </div>
                     {/* Primary Navigation (hidden on mobile) */}
                     <div className="hidden font-extralight md:flex items-center space-x-8 text-xl ">
-                        <Link to="/Assesment" className="text-white hover:text-gray-900">
+                        <Link to="/LogAssesment" className="text-white hover:text-gray-900">
                             Assesment
                         </Link>
-                        <Link to="/Resources" className="text-white hover:text-gray-900">
+                        <Link to="/LogResources" className="text-white hover:text-gray-900">
                             Resources
                         </Link>
-
-                        <Link to="/About" className="text-white hover:text-gray-900">
-                            About
+                        <Link to="/pricing" className="text-white hover:text-gray-900">
+                        Payment
                         </Link>
+
+
                     </div>
                     <div className="hidden md:flex items-center space-x-5 font-bold">
-                        <Link to="/profile" className="bg-white shadow-lg hover:bg-blue-300 text-blue-400 rounded px-3 py-1 transition duration-300">Profile</Link>
+                        <Link to="/profile" className=" font-medium text-md bg-white shadow-lg hover:bg-blue-300 text-blue-700 rounded px-3 py-1 transition duration-300">Profile</Link>
                     </div>
-                  
+
 
                     {/* Secondary Navigation (hidden on mobile) */}
                     {/* <div className="hidden md:flex items-center space-x-5 font-bold">
@@ -67,13 +69,13 @@ export default function Navbar() {
 
             {/* Mobile Menu (visible on mobile) */}
             <div id="mobile" className={`mobile-menu md:hidden ${isMobileMenuOpen ? "" : "hidden"}`}>
-                <Link to="/About" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
-                    About
+                <Link to="/Profile" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+                    Profile
                 </Link>
-                <Link to="/Assesment" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+                <Link to="/LogAssesment" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
                     Assesment
                 </Link>
-                <Link to="/Resources" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+                <Link to="/LogResources" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
                     Resources
                 </Link>
 

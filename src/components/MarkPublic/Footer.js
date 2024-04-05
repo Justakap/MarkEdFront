@@ -32,7 +32,7 @@ export default function Footer() {
                             <h2 className="mb-6 text-sm font-semibold text-white uppercase dark:text-white">Legal</h2>
                             <ul className=" text-slate-200 dark:text-gray-400 font-medium">
                                 <li className="mb-4">
-                                    <Link to="#" className="hover:underline">Privacy Policy</Link>
+                                    <Link to="/login" className="hover:underline">Privacy Policy</Link>
                                 </li>
 
                                 <li className="mb-4">
@@ -45,7 +45,7 @@ export default function Footer() {
                     </div>
                     <div className="text-center pb-1">
                         <span className="text-sm text-center text-slate-200 dark:text-gray-300 sm:text-center">© {(new Date().getFullYear())} <Link to="">MarkX</Link>. All Rights Reserved.</span><br />
-                        <span className="text-sm text-center text-slate-200 dark:text-gray-300 sm:text-center">Version 2.1</span>
+                        <span className="text-sm text-center text-slate-200 dark:text-gray-300 sm:text-center">Version 2.6.0</span>
 
                     </div>
                 </div>

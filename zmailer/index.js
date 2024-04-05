@@ -15,8 +15,6 @@ app.get('/', (req, res) => {
     res.status(200).render('index.ejs');
 });
 
-
-
 app.post('/sendMail', (req, res) => {
     let email = req.body.email; 
     const random = Math.floor(Math.random() * 100000);
@@ -63,3 +61,9 @@ app.post('/sendMail', (req, res) => {
 app.listen(port, () => {
     console.log(`Server started at ${port}`);
 });
+
+
+
+
+
+

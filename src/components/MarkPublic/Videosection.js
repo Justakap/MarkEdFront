@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export default function Videosection(props) {
-    const { pyq,branch, count, source, semester, subject, notesUrl } = props;
+    const { comment,branch, source, semester, subject, notesUrl } = props;
 
     function convertToEmbeddedUrl(source) {
         const url = new URL(source);
@@ -16,6 +16,7 @@ export default function Videosection(props) {
           if (videoId) {
             // Construct the embedded URL
             const embeddedUrl = `https://www.youtube.com/embed/${videoId}`;
+                                       
             return embeddedUrl;
           } else {
             // Handle case where video ID is not present
@@ -86,17 +87,18 @@ export default function Videosection(props) {
                                         <div className='font-bold m-2 '>Branch : {branch}</div>
                                         <div className='font-bold m-2 '>Sem: {semester}</div>
                                     </div>
-                                    <div className="text-lg my-2">
-                                        <span className='font-bold m-2 '>Lecture Number :</span>{count}
-                                    </div>
+                                    
                                     <div className="text-lg my-2 m-2 ">
-                                        <span className='font-bold '>Title :</span> {videoInfo.title.slice(0, 60) + "..."}
+                                        <span className='font-bold '>Title :</span> {videoInfo.title.slice(0, 50) + "..."}
                                     </div>
                                     <div className="text-lg my-2">
                                         <span className='text-xl font-bold m-2 '>Description :</span>{videoInfo.description.slice(0, 57) + "..."}
                                     </div>
                                     <div className="text-lg my-2">
                                         <span className='font-bold m-2 '>Subject :</span>{subject}
+                                    </div>
+                                    <div className="text-lg my-2">
+                                        <span className='font-bold m-2 '>Comments :</span>{comment}
                                     </div>
                                    
                                     {/* <div className="text-lg my-2">
@@ -119,7 +121,7 @@ export default function Videosection(props) {
                                             <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-red-400 -rotate-12"></span>
                                             <span className="relative">Youtube</span>
                                         </Link>
-                                        <Link to={pyq} target='_blank' className="my-2 relative px-4 py-1 mx-3 w-40 text-center font-medium text-white group">
+                                        <Link to="" target='_blank' className="my-2 relative px-4 py-1 mx-3 w-40 text-center font-medium text-white group">
                                             <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-blue-500 group-hover:bg-blue-400 group-hover:skew-x-12"></span>
                                             <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-blue-700 group-hover:bg-blue-500 group-hover:-skew-x-12"></span>
                                             <span className="absolute bottom-0 left-0 hidden w-10 h-20 transit  ion-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-blue-600 -rotate-12"></span>

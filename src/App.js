@@ -8,6 +8,7 @@ import Resources from './components/MarkPublic/Resouces';
 import Resources2 from './components/MarkPublic/Resouces2';
 import AddResouce from './components/MarkPublic/AddResouce';
 import AddVideo from './components/MarkPublic/AddVideo';
+import AddVideo2 from './components/MarkPublic/AddVideo2';
 import AddSubject from './components/MarkPublic/AddSubject';
 import AddBranch from './components/MarkPublic/AddBranch';
 import Home from './components/MarkPublic/Home';
@@ -27,6 +28,13 @@ import UnitCard from './components/MarkPublic/UnitCard';
 import AddUnit from './components/MarkPublic/AddUnit';
 import AddUnit2 from './components/MarkPublic/AddUnit2';
 import AddSubject2 from './components/MarkPublic/AddSubject2';
+import AddAssesment2 from './components/MarkCollege/Assesment/AddAssesment2';
+import LogResources from './components/MarkPublic/LogResources';
+import LogResources2 from './components/MarkPublic/LogResources2';
+import LogAssessment from './components/MarkCollege/Assesment/LogAssessment';
+import Queries from './components/MarkPublic/Queries';
+import Payment from './components/MarkPublic/Payment';
+import PaymentSuccess from './components/MarkPublic/PaymentSuccess';
 
 
 
@@ -67,6 +75,16 @@ function App() {
           <Route path='/resources' exact element={<>
             <Navbar />
             <Resources></Resources>
+            <Footer />
+          </>} />
+          <Route path='/LogResources' exact element={<>
+            <Navbar4/>
+            <LogResources></LogResources>
+            <Footer />
+          </>} />
+          <Route path='/semester2' exact element={<>
+            <Navbar4/>
+            <LogResources2></LogResources2>
             <Footer />
           </>} />
 
@@ -125,6 +143,11 @@ function App() {
             <AddVideo></AddVideo>
             <Footer />
           </>} />
+          <Route path='/Modify/Video/Add' exact element={<>
+            <Navbar />
+            <AddVideo2></AddVideo2>
+            <Footer />
+          </>} />
           <Route path='/Modify/Subject' exact element={<>
             <Navbar />
             <AddSubject></AddSubject>
@@ -150,6 +173,21 @@ function App() {
             <AddUnit2></AddUnit2>
             <Footer />
           </>} />
+          <Route path='/Queries' exact element={<>
+            <Navbar />
+           <Queries></Queries>
+            <Footer />
+          </>} />
+          <Route path='/Payment' exact element={<>
+            <Navbar4 />
+           <Payment></Payment>
+            <Footer />
+          </>} />
+          <Route path='/pSuccess' exact element={<>
+            <Navbar4 />
+           <PaymentSuccess></PaymentSuccess>
+            <Footer />
+          </>} />
 
 
           {/* Mark College */}
@@ -159,14 +197,23 @@ function App() {
             <Asses></Asses>
 
           </>} />
+          <Route path='/LogAssesment' element={<>
+            <Navbar4/>
+            <LogAssessment></LogAssessment>
+          </>} />
           <Route path='/assesment/addQuestion' element={<>
             <Navbar />
             <AddQuestion></AddQuestion>
             <Footer />
           </>} />
-          <Route path='/assesment/addAssesment' element={<>
+          <Route path='/Modify/Assesment' element={<>
             <Navbar />
             <AddAssesment></AddAssesment>
+            <Footer />
+          </>} />
+          <Route path='/Modify/Assesment/Add' element={<>
+            <Navbar />
+            <AddAssesment2></AddAssesment2>
             <Footer />
           </>} />
 

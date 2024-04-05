@@ -2,8 +2,52 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Question from './Question';
 import Loading from '../../MarkPublic/Loading';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Assessment() {
+export default function LogAssessment() {
+
+
+    const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        // Set a flag to track whether the effect has already been executed
+        let effectExecuted = false;
+        
+        // Use setTimeout to delay the execution of the effect
+        const timer = setTimeout(() => {
+            const token = localStorage.getItem('token');
+            if (token && !effectExecuted) {
+                axios.get(`${process.env.REACT_APP_API_BASE_URL}/user`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then(response => {
+                    const currentUser = JSON.parse(localStorage.getItem('user'));
+                    setUser(currentUser);
+                    setLoading(false);
+                    if (currentUser && !currentUser.isPlus) {
+                        alert("Purchase the Premium First @ 299")
+                        navigate('/home');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching user data:', err);
+                    navigate('/home');
+                });
+                effectExecuted = true;
+            } else {
+                setLoading(false);
+                navigate('/login');
+            }
+        }, 200); // Delay of 1 second
+
+        // Clear the timer if the component unmounts or the effect re-runs
+        return () => clearTimeout(timer);
+    }, [navigate]);
+
+
+
     const [assessments, setAssessments] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [data, setData] = useState([]);
@@ -63,16 +107,22 @@ export default function Assessment() {
     };
 
     const startTest = () => {
-        const startTestButton = document.getElementById("startTest");
-        const mainContent1 = document.getElementById("mainContent1");
-        if (startTestButton.hidden === true) {
-            startTestButton.hidden = false;
-            mainContent1.hidden = true;
+        if (formData.branch != "" && formData.subject != "" ) {
+            const startTestButton = document.getElementById("startTest");
+            const mainContent1 = document.getElementById("mainContent1");
+            if (startTestButton.hidden === true) {
+                startTestButton.hidden = false;
+                mainContent1.hidden = true;
+            }
+        }
+        else {
+            alert("Please Select all the Required Fields")
         }
     };
 
     return (
         <>
+
             {loading ? (
                 <div className="flex  justify-center h-screen">
                     <Loading />
@@ -98,6 +148,7 @@ export default function Assessment() {
                                                 className="my-2 block py-2.5 px-0 w-full text-md text-gray-500 bg-transparent border-r-0 border-l-0 border-t-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                                                 id="subject"
                                                 onChange={handleBranchChange}
+                                                required
                                             >
                                                 <option value="">Select Branch</option>
                                                 {data.map((element) => (
@@ -158,5 +209,7 @@ export default function Assessment() {
                 </>
             )}
         </>
+        // <></>
     );
 }
+
