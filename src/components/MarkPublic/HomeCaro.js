@@ -4,7 +4,7 @@ import "./load.css"
 
 export default function HomeCaro(props) {
   const choices = [
-   
+
     {
       id: "B",
       to: "LogResources",
@@ -14,8 +14,8 @@ export default function HomeCaro(props) {
     },
     {
       id: "C",
-      to: "LogAssesment",
-      type: "Assesment",
+      to: "LogAssessment",
+      type: "Assessment",
       desc: "Complete all the Assesment Available",
       image: "https://w7.pngwing.com/pngs/819/737/png-transparent-computer-icons-assessment-logo-organization-risk-thumbnail.png",
     },

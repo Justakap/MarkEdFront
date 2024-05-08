@@ -1,11 +1,52 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
+
+
   const navigate = useNavigate();
+
+
+  const [user, setUser] = useState('');
+  const token = localStorage.getItem('token');
+  const emailVer = JSON.parse(localStorage.getItem('user'));
+
+  useEffect(() => {
+    if (token) {
+      // const { email } = JSON.parse(localStorage.getItem('user'));
+      if (emailVer) { // Check if email is not empty
+        // axios.get(`${process.env.REACT_APP_API_BASE_URL}/userNew?email=${emailVer}`)
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}/userNew?_id=${emailVer}`)
+          .then(response => {
+            setUser(response.data);
+            if (response.data.isAdmin) {
+              navigate("/Admin/Home");
+            }
+            else {
+              navigate("/home");  
+            }
+          })
+          .catch(err => console.log(err));
+      } else {
+        navigate('/login');
+      }
+    } else {
+      navigate('/login');
+    }
+  }, []);
+
+
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // const currentUser = JSON.parse(localStorage.getItem('user'));
+
+
+
+
 
   async function submit(e) {
     e.preventDefault();
@@ -15,10 +56,20 @@ export default function Login() {
         password
       });
       if (response.data.auth) {
-        console.log(response.data.user)
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        // console.log(response.data.user)
+        // localStorage.setItem('user', JSON.stringify(response.data.user.email));
+        localStorage.setItem('user', JSON.stringify(response.data.user._id));
         localStorage.setItem('token', JSON.stringify(response.data.auth));
-        navigate("/home");
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        setUser(currentUser);
+        if (currentUser.isAdmin === true) {
+
+          navigate("/Admin/Home");
+        }
+        else {
+          navigate("/home");
+
+        }
       } else if (response.data === "incorrect") {
         alert("Password does not match");
       } else if (response.data === "notexist") {
@@ -32,7 +83,7 @@ export default function Login() {
 
   return (
     <>
-      
+
       <div className="max-w-2xl mx-auto">
 
         <div className="mt-8"></div>

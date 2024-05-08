@@ -17,7 +17,7 @@ export default function AddVideo() {
   });
   const [successMessage, setSuccessMessage] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { 
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/branches`)
       .then(response => setData(response.data))
       .catch(err => console.log(err));

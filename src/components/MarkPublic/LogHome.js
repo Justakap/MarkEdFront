@@ -4,30 +4,27 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function LogHome() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
+  const token = localStorage.getItem('token');
+  const _id = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     if (token) {
-      axios.get(`${process.env.REACT_APP_API_BASE_URL}/user`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then(response => {
-          const currentUser = JSON.parse(localStorage.getItem('user'));
-          // console.log(currentUser);
-          setUser(currentUser);
-        
-        })
-        .catch(err => {
-          console.error('Error fetching user data:', err);
-          navigate('/login');
-        });
+      // const { email } = JSON.parse(localStorage.getItem('user'));
+      if (_id) { // Check if email is not empty
+        // axios.get(`${process.env.REACT_APP_API_BASE_URL}/userNew?email=${email}`)
+        axios.get(`${process.env.REACT_APP_API_BASE_URL}/userNew?_id=${_id}`)
+          .then(response => {
+            setUser(response.data);
+          })
+          .catch(err => console.log(err));
+      } else {
+        navigate('/login');
+      }
     } else {
       navigate('/login');
     }
-  },);
+  }, []);
 
 
   const [branches, setBranches] = useState([]);

@@ -14,23 +14,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          
 
-          {/* Primary Navigation (hidden on mobile) */}
-          <div className="hidden font-extralight md:flex items-center space-x-8 text-xl ">
-            <Link to="/Assesment" className="text-white hover:text-gray-900">
-              Assesment
-            </Link>
-            <Link to="/Resources" className="text-white hover:text-gray-900">
-              Resources
-            </Link>           
-            <Link to="/Queries" className="text-white hover:text-gray-900">
-            Queries
-            </Link>
-            <Link to="/About" className="text-white hover:text-gray-900">
-              About
-            </Link>
-          </div>
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center text-lg font-bold text-white hover:text-gray-900">
               {/* <img
@@ -38,9 +22,30 @@ export default function Navbar() {
                 src={markLogo}
                 alt="Better Dev Logo"
               /> */}
-               <p className='text-white text-2xl'>MarkX</p>
+              <p className='text-white text-2xl'>MarkX</p>
             </Link>
           </div>
+          {/* Primary Navigation (hidden on mobile) */}
+          <div className="hidden font-extralight md:flex items-center space-x-8 text-xl ">
+           
+            <Link to="/Resources" className="text-white hover:text-gray-900">
+              Resources
+            </Link>
+            <Link to="/Queries" className="text-white hover:text-gray-900">
+              Queries
+            </Link>
+
+          </div>
+          <div className="hidden font-extralight md:flex items-center space-x-8 text-xl ">
+            <Link to="/About" className="text-white hover:text-gray-900">
+              About
+            </Link>
+            <Link to="/Login" className="text-white hover:text-gray-900">
+              Login
+            </Link>
+
+          </div>
+
 
           {/* Secondary Navigation (hidden on mobile) */}
           {/* <div className="hidden md:flex items-center space-x-5 font-bold">
@@ -69,17 +74,21 @@ export default function Navbar() {
         <Link to="/About" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
           About
         </Link>
-        <Link to="/Assesment" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
-          Assesment
-        </Link>
+        
         <Link to="/Resources" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
           Resources
         </Link>
         <Link to="/Queries" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
-          Resources
+          Queries
+        </Link>
+        <Link to="/About" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+          About
+        </Link>
+        <Link to="/Login" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+          Login
         </Link>
 
-      
+
       </div>
     </nav>
   );

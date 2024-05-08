@@ -1,12 +1,12 @@
+
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-import StayTuned from './StayTuned';
 
-export default function LogResources2(props) {
+export default function LogBranches2() {
 
-    const { branch } = props
+
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(null);
@@ -62,12 +62,16 @@ export default function LogResources2(props) {
     const [semesterCount, setSemesterCount] = useState([]);
     const [firstText, setFirstText] = useState();
 
-    const selectedBranchDetails = branch.filter((e) => e.branch === param1)
-
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_BASE_URL}/subjects`)
             .then(response => setSubject(response.data))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
+        if (param1 === "First Year") {
+            setSemesterCount([1]);
+            setFirstText("Note : All Subjects are available in First Semester Tab Only")
+        } else {
+            setSemesterCount([3, 4, 5, 6, 7, 8]);
+        }
     }, [param1]);
 
 
@@ -87,82 +91,70 @@ export default function LogResources2(props) {
         const semester = document.getElementById("semester")
         const semesterText = document.getElementById("semesterText")
         const semesterHeadText = document.getElementById("semesterHeadText")
-        // semester.hidden = true;
+        semester.hidden = true;
         if (subject.filter((filtered) => (filtered.semester === selectedSemester && filtered.branch === param1)).length < 1) {
-            semesterHeadText.innerHTML = "Stay Tuned Our Team is Constantly Working Hard on Updating Courses";
+            semesterHeadText.innerHTML = "No Results Available";
             semesterText.hidden = true;
         }
         else {
-            // semesterHeadText.innerHTML = `${param1} Sem ${selectedSemester}`;
+            semesterHeadText.innerHTML = `${param1} Sem ${selectedSemester}`;
             semesterText.hidden = true;
         }
 
     }
-    const check = subject.filter((filtered) => (filtered.semester === selectedSemester && filtered.branch === param1)).length < 1
-
 
 
 
 
     return (
-        <>{check ? <StayTuned /> : <>
-        <div className='text-center m-2'>
-            {check ? <></> : <><h1 id='semesterHeadText1' className=' my-2 font-bold text-3xl text-blue-400 '>Exploring {param1}</h1></>}
+        <>
+            <div className='text-center m-2'>
+                <h1 id='semesterHeadText' className=' font-bold text-3xl text-blue-400 '>Exploring {param1}</h1>
+            </div>
+            <h2 id='semesterText' className=' font-bold text-3xl text-emerald-500 text-center my-4'>Select Semester</h2>
 
-            {check ? <><h1 id='semesterHeadText' className=' my-1 font-bold text-3xl text-blue-400 '>Exploring {param1}</h1></> : <></>}
-        </div>
-        <h2 id='semesterText' className=' font-bold text-3xl text-emerald-500 text-center'>Select Category</h2>
+            <div className="flex flex-wrap justify-around" id="semester">
 
-        <div className="flex flex-wrap justify-around" id="semester">
-
-
-            {selectedBranchDetails && selectedBranchDetails.length > 0 && (
-                selectedBranchDetails[0].subBranches.map((e) => (
-                    <>
-                        <button
-                            key={e.value}
-                            value={e.value}
-                            onClick={() => handleSemesterClick(e.value)}
-                            className={` font-serif px-1 mt-4 py-2 bg-blue-500 rounded-md text-white ${selectedSemester === e.value ? 'bg-green-500' : ''}`}
-                        >
-                            {e.typeName} {e.display ? <>: {e.display}</> : <></>}
-                        </button>
-
-                    </>
-                ))
-            )}
-        </div>
-        <h1 id='semesterHeadText' className='text-center mb-2 sm:text-xl font-bold text-sm text-black '>{firstText}</h1>
+                {semesterCount.map((semester) => (
+                    <button
+                        key={semester}
+                        value={semester}
+                        onClick={() => handleSemesterClick(semester)}
+                        className={`circle px-8 text-3xl py-6 mx-10 ml-16 my-5 bg-blue-500 rounded-full text-white ${selectedSemester === semester ? 'bg-green-500' : ''}`}
+                    >
+                        {semester}
+                    </button>
+                ))}
+            </div>
+            <h1 id='semesterHeadText' className='text-center mb-2 sm:text-xl font-bold text-sm text-black '>{firstText}</h1>
 
 
-        <tbody className=' ' id="subjectList">
+            <tbody className='hidden ' id="subjectList">
 
-            {selectedSemester ? <><div className=" flex flex-wrap  justify-around">
 
-                {subject.filter((filtered) => (filtered.semester == selectedSemester && filtered.branch === param1)).map((element, index) => (
 
-                    <div key={element.id} className="w-72 rounded overflow-hidden shadow-lg m-2 my-7">
-                        <img
-                            className="w-full h-40"
-                            src={element.image}
-                            alt="Sunset in the mountains"
-                        />
-                        <div className="px-3 py-2">
-
-                            <div className="text-center  my-2">
-                                <Link to={`/unit?subject=${element.name}`} className="  text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-3 w-fit py-2.5 text-center ">
-                                    {element.name.slice(0, 25)}...  →
-                                </Link>
+            <div className=" flex flex-wrap  justify-around">
+                    {subject.filter((filtered) => (filtered.semester === selectedSemester && filtered.branch === param1)).map((element, index) => (
+                        <div key={element.id} className="w-72 rounded overflow-hidden shadow-lg m-2 my-7">
+                            <img
+                                className="w-full h-40"
+                                src={element.image}
+                                alt="Sunset in the mountains"
+                            />
+                            <div className="px-3 py-2">
+                             
+                                <div className="text-center  my-2">
+                                    <Link to={`/unit?subject=${element.name}`} className="  text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-3 w-fit py-2.5 text-center ">
+                                    {element.name.slice(0,25)}...  →
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div></> : <> <div className="mt-72"></div> </>}
-
-
-        </tbody>
-    </> }
+                    ))}
+                </div>
+            </tbody>
         </>
     );
 }
+
 

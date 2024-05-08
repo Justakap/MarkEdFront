@@ -1,8 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import markLogo from '../../MarkX.png';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
+
+    const navigate = useNavigate();
+    const [user, setUser] = useState('');
+    const token = localStorage.getItem('token');
+    const _id = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        if (token) {
+            // const { email } = JSON.parse(localStorage.getItem('user'));
+            if (_id) { // Check if email is not empty
+                axios.get(`${process.env.REACT_APP_API_BASE_URL}/userNew?_id=${_id}`)
+                    .then(response => {
+                        setUser(response.data);
+                    })
+                    .catch(err => console.log(err));
+            } else {
+                navigate('/login');
+            }
+        } else {
+            navigate('/login');
+        }
+    }, []);
+
+
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
@@ -12,7 +36,7 @@ export default function Navbar() {
     return (
         <nav style={{ color: "white", backgroundColor: "#596FB7", fontFamily: "'Rubik', sans-serif" }} className="bg-gray-200 shadow-md p-4 text-white">
             <div className="max-w-6xl mx-auto">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between jus items-center">
                     {/* Logo */}
 
                     <div className="flex-shrink-0">
@@ -22,26 +46,30 @@ export default function Navbar() {
                                 src={markLogo}
                                 alt="Better Dev Logo"
                             /> */}
-                         <span className=' text-2xl'>MarkX  </span> <span className=' text-5xl font-extrabold'>⁺</span>     
+                            <span className=' text-2xl'>MarkX  </span> <span className=' text-5xl font-extrabold'>⁺</span>
 
                         </Link>
                     </div>
                     {/* Primary Navigation (hidden on mobile) */}
                     <div className="hidden font-extralight md:flex items-center space-x-8 text-xl ">
-                        <Link to="/LogAssesment" className="text-white hover:text-gray-900">
+                        <Link to="/LogAssessment" className="text-white hover:text-gray-900">
                             Assesment
                         </Link>
                         <Link to="/LogResources" className="text-white hover:text-gray-900">
                             Resources
                         </Link>
-                        <Link to="/pricing" className="text-white hover:text-gray-900">
-                        Payment
-                        </Link>
+
+                        {user.isPlus  ? <></>:<><Link to="/Logpricing" className="text-white hover:text-gray-900">
+                            Upgrade
+                        </Link></>}
+                       
+
 
 
                     </div>
-                    <div className="hidden md:flex items-center space-x-5 font-bold">
-                        <Link to="/profile" className=" font-medium text-md bg-white shadow-lg hover:bg-blue-300 text-blue-700 rounded px-3 py-1 transition duration-300">Profile</Link>
+                    <div className="hidden md:flex font-bold justify-end">
+                        {/* <Link to="/profile" className=" font-medium text-md bg-white shadow-lg hover:bg-blue-300 text-blue-700 rounded px-3 py-1 transition duration-300">Profile</Link> */}
+                        <Link to="/profile"> <img className=' w-12 h-12 rounded-full border-black border-2' src={user ? user.image : "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg"} alt="" /></Link>
                     </div>
 
 
@@ -72,11 +100,14 @@ export default function Navbar() {
                 <Link to="/Profile" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
                     Profile
                 </Link>
-                <Link to="/LogAssesment" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+                <Link to="/LogAssessment" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
                     Assesment
                 </Link>
                 <Link to="/LogResources" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
                     Resources
+                </Link>
+                <Link to="/LogPricing" className="block py-2 px-4 text-lg text-white hover:bg-gray-200" onClick={toggleMobileMenu}>
+                    Upgrade
                 </Link>
 
 

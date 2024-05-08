@@ -19,11 +19,36 @@ export default function ModifySubjectCard(props) {
             .catch(err => console.log(err));
 
     });
+    // axios.delete(`${process.env.REACT_APP_API_BASE_URL}/deleteSubjects/${id}`)
 
+    const handleSubjectDelete = (e) => {
+        const id = e.target.value;
 
+        const confirmed = window.confirm("Are you Sure Want to delte")
+        if (confirmed) {
+            try {
+                const response = axios.delete(`${process.env.REACT_APP_API_BASE_URL}/deleteSubjects/${id}`);
+
+                if (response.data === "done") {
+                    alert("Subject delted successfully!");
+                    // window.location.reload();
+                } else if (response.data === "exist") {
+                    alert("Subject already exists.");
+                } else if (response.data === "nadded") {
+                    alert("Subject not added.");
+                }
+            } catch (error) {
+                console.error("Server Error:", error);
+                alert("Server Error");
+            }
+        } else {
+            alert("Cancelled")
+        }
+
+    }
     return (
         <>
-            
+
 
             {subject.filter((filtered) => (filtered.semester == semester && filtered.branch == branch)).map((element, index) => (
                 <div key={element.id} className="w-72  rounded-lg overflow-hidden shadow-lg m-3 my-8">
@@ -37,9 +62,9 @@ export default function ModifySubjectCard(props) {
                             {element.name}
                         </div>
                         <div className="text-center">
-                            <Link class=" my-1 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-800">
+                            <button onClick={handleSubjectDelete} value={element._id} class=" my-1 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-800">
                                 Delete
-                            </Link>
+                            </button>
                         </div>
 
                     </div>

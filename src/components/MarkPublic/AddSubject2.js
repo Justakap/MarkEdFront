@@ -63,7 +63,7 @@ export default function AddSubject2() {
             <h1 className=' text-center text-3xl my-3'>Showing {branch} Semester {semester}</h1>
 
             <div className='flex ml-6 flex-wrap '>
-                <div className="text-center max-w-sm w-64 p-6 m-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div className="text-center max-w-sm w-72 p-6 m-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Add Subject</h5>
                     <hr />
                     <form onSubmit={handleSubmit}>

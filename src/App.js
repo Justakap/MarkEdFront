@@ -1,4 +1,7 @@
 import './App.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './components/MarkPublic/Navbar';
 import HomeCaro from './components/MarkPublic/HomeCaro';
@@ -18,7 +21,7 @@ import About from './components/MarkPublic/About';
 import Signup from './components/MarkPublic/Signup';
 import LogHome from './components/MarkPublic/LogHome';
 import Profile from './components/MarkPublic/Profile';
-import Asses from './components/MarkCollege/Assesment/Asses';
+import ViewResult from './components/MarkCollege/Assesment/ViewResult';
 import AddQuestion from './components/MarkCollege/Assesment/AddQuestion';
 import AddAssesment from './components/MarkCollege/Assesment/AddAssesment';
 import Pricing from './components/MarkPublic/Pricing';
@@ -35,6 +38,20 @@ import LogAssessment from './components/MarkCollege/Assesment/LogAssessment';
 import Queries from './components/MarkPublic/Queries';
 import Payment from './components/MarkPublic/Payment';
 import PaymentSuccess from './components/MarkPublic/PaymentSuccess';
+import LogPricing from './components/MarkPublic/LogPricing';
+import AdminHome from './components/MarkAdmin/AdminHome';
+import ViewUsers from './components/MarkAdmin/ViewUsers';
+import SideBar from './components/MarkAdmin/SideBar';
+import AdminProfile from './components/MarkAdmin/AdminProfile';
+import Inbox from './components/MarkAdmin/Inbox';
+import AssessmentHome from './components/MarkCollege/Assesment/AssessmentHome';
+import CHome from './components/MarkCommunity/CHome';
+import ChooseCommunity from './components/MarkCommunity/ChooseCommunity';
+import CommingSoon from './components/MarkPublic/CommingSoon';
+import LogBranches from './components/MarkPublic/LogBranches';
+import Branches from './components/MarkPublic/Branches';
+import AddResources from './components/MarkPublic/AddResources';
+
 
 
 
@@ -43,6 +60,70 @@ function App() {
 
   // The Below Data is fetched from /unit an conatins units collection
   // start 
+  //declaring all the variables  
+  const [inbox, setInbox] = useState([])
+  const [user, setUser] = useState([])
+  const [subject, setSubject] = useState([])
+  const [branch, setBranch] = useState([])
+  const [video, setVideo] = useState([])
+  const [assessmentResult, setAssessmentResult] = useState([])
+
+
+  // fetching the user
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/user`)
+      .then(response => setUser(response.data))
+      .catch(err => console.error(err));
+  }, []);
+  // fetching the inbox
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/Queries`)
+      .then(response => setInbox(response.data))
+      .catch(err => console.error(err));
+  }, []);
+  // fetch subject
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/subjects`)
+      .then(response => setSubject(response.data))
+      .catch(err => console.error(err));
+  }, []);
+  // fetching the branch
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/branches`)
+      .then(response => setBranch(response.data))
+      .catch(err => console.error(err));
+  }, []);
+  // fetching the video
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/getData`)
+      .then(response => setVideo(response.data))
+      .catch(err => console.error(err));
+  }, []);
+  // fetching the assessmentResult
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/AssessmentResult`)
+      .then(response => setAssessmentResult(response.data))
+      .catch(err => console.error(err));
+  }, []);
+
+  // fetching the communities
+  // const [community, setCommunity] = useState([])
+  // useEffect(() => {
+  //   axios.get(`${process.env.REACT_APP_API_BASE_URL}/communities`)
+  //     .then(response => setCommunity(response.data))
+  //     .catch(err => console.log(err));
+  // }, [community]);
+  // // messages
+  // const [communityMessage, setCommunityMessage] = useState([])
+  // useEffect(() => {
+  //   axios.get(`${process.env.REACT_APP_API_BASE_URL}/communities/messages`)
+  //     .then(response => setCommunityMessage(response.data))
+  //     .catch(err => console.log(err));
+  // }, [communityMessage]);
+
+  //fetching data of currentCommunity
+
+
 
   //end
 
@@ -52,13 +133,28 @@ function App() {
     <>
       <Router>
         <Routes>
-
+          {/* Community Page  */}
+          <Route path='/community' exact element={<>
+            {/* <Navbar4></Navbar4>
+            <ChooseCommunity community={community}></ChooseCommunity>
+            <Footer></Footer> */}
+            <CommingSoon></CommingSoon>
+          </>}>
+          </Route>
+          <Route path='/community/Dashboard' exact element={<>
+            {/* <Navbar4></Navbar4>
+            <CHome community={community} users={user} communityMessage={communityMessage}></CHome>
+            <Footer></Footer> */}
+            <CommingSoon></CommingSoon>
+          </>}>
+          </Route>
           <Route path='/' exact element={<>
             <Navbarbefore />
             <Home></Home>
-            {/* <Carousel /> */}
-            {/* <HomeCaro /> */}
             <Footer /></>}
+          />
+          <Route path='/soon' exact element={<>
+            <CommingSoon></CommingSoon></>}
           />
           <Route path='/home' exact element={<>
             <Navbar4 />
@@ -71,6 +167,14 @@ function App() {
             <Pricing></Pricing>
             <Footer /></>}
           />
+          <Route path='/LogPricing' exact element={<>
+
+
+            <LogPricing></LogPricing>
+
+            <Footer />
+          </>}
+          />
 
           <Route path='/resources' exact element={<>
             <Navbar />
@@ -78,30 +182,36 @@ function App() {
             <Footer />
           </>} />
           <Route path='/LogResources' exact element={<>
-            <Navbar4/>
+            <Navbar4 />
             <LogResources></LogResources>
             <Footer />
           </>} />
+          <Route path='/Branches' exact element={<>
+            <Navbar />
+            <Branches></Branches>
+            <Footer />
+          </>} />
+          <Route path='/LogBranches' exact element={<>
+            <Navbar4 />
+            <LogBranches></LogBranches>
+            <Footer />
+          </>} />
           <Route path='/semester2' exact element={<>
-            <Navbar4/>
-            <LogResources2></LogResources2>
+            <Navbar4 />
+            <LogResources2 branch={branch}></LogResources2>
             <Footer />
           </>} />
 
           <Route path='/unit' exact element={<>
-            <Navbar />
             <UnitCard></UnitCard>
             <Footer />
           </>} />
-          <Route path='/semester' exact element={<>
+          <Route path='/category' exact element={<>
             <Navbar />
-            <Resources2></Resources2>
+            <Resources2 branch={branch}></Resources2>
             <Footer />
           </>} />
-
-
           <Route path='/video' exact element={<>
-            <Navbar />
             <Video></Video>
             <Footer />
           </>} />
@@ -124,100 +234,196 @@ function App() {
             <Footer />
           </>} />
 
-
-
-          <Route path='/Modify' exact element={<>
-            <Navbar />
-            <AddResouce></AddResouce>
-            <Footer />
-          </>} />
           <Route path='/about' element={<>
             <Navbar />
             <About></About>
-
             <Footer />
           </>} />
 
-          <Route path='/Modify/Video' exact element={<>
-            <Navbar />
-            <AddVideo></AddVideo>
-            <Footer />
-          </>} />
-          <Route path='/Modify/Video/Add' exact element={<>
-            <Navbar />
-            <AddVideo2></AddVideo2>
-            <Footer />
-          </>} />
-          <Route path='/Modify/Subject' exact element={<>
-            <Navbar />
-            <AddSubject></AddSubject>
-            <Footer />
-          </>} />
-          <Route path='/Modify/Subject/Add' exact element={<>
-            <Navbar />
-            <AddSubject2></AddSubject2>
-            <Footer />
-          </>} />
-          <Route path='/Modify/Branch' exact element={<>
-            <Navbar />
-            <AddBranch></AddBranch>
-            <Footer />
-          </>} />
-          <Route path='/Modify/Unit' exact element={<>
-            <Navbar />
-            <AddUnit></AddUnit>
-            <Footer />
-          </>} />
-          <Route path='/Modify/Unit/Add' exact element={<>
-            <Navbar />
-            <AddUnit2></AddUnit2>
-            <Footer />
-          </>} />
+
           <Route path='/Queries' exact element={<>
             <Navbar />
-           <Queries></Queries>
+            <Queries></Queries>
             <Footer />
           </>} />
           <Route path='/Payment' exact element={<>
-            <Navbar4 />
-           <Payment></Payment>
-            <Footer />
+            <Navbar4></Navbar4>
+            <Payment></Payment>
+
           </>} />
           <Route path='/pSuccess' exact element={<>
             <Navbar4 />
-           <PaymentSuccess></PaymentSuccess>
+            <PaymentSuccess></PaymentSuccess>
             <Footer />
           </>} />
 
-
           {/* Mark College */}
 
-          <Route path='/Assesment' element={<>
-            <Navbar />
-            <Asses></Asses>
-
+          <Route path='/LogAssessment' element={<>
+            <Navbar4 />
+            <AssessmentHome></AssessmentHome>
+            {/* <LogAssessment></LogAssessment> */}
           </>} />
-          <Route path='/LogAssesment' element={<>
-            <Navbar4/>
+          <Route path='/LogAssessment/AttemptAssessment' element={<>
+            <Navbar4 />
+
             <LogAssessment></LogAssessment>
+          </>} />
+          <Route path='/LogAssessment/viewResult' element={<>
+            <Navbar4 />
+            <ViewResult></ViewResult>
           </>} />
           <Route path='/assesment/addQuestion' element={<>
             <Navbar />
             <AddQuestion></AddQuestion>
             <Footer />
           </>} />
-          <Route path='/Modify/Assesment' element={<>
-            <Navbar />
-            <AddAssesment></AddAssesment>
-            <Footer />
+
+
+
+          {/* Admin */}
+
+          <Route path='/Admin/Home' element={<>
+            <AdminHome user={user} subject={subject} branch={branch} assessmentResult={assessmentResult} video={video} ></AdminHome>
+          </>} />
+          <Route path='/Admin/Inbox' element={<>
+            <div className="flex">
+              <SideBar ></SideBar>
+              <div className="main w-screen">
+                <Inbox inbox={inbox} ></Inbox>
+              </div>
+            </div>
+          </>} />
+          <Route path='/Admin/ViewUsers' element={<>
+            <ViewUsers inbox={inbox} users={user}></ViewUsers>
+
+          </>} />
+          <Route path='/Admin/Pricing' element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <div className="main">
+                <Pricing ></Pricing>
+              </div>
+            </div>
+
+          </>} />
+          <Route path='/Admin/Modify' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <div className="main">
+                <AddResouce></AddResouce>
+              </div>
+
+            </div>
+          </>} />
+          <Route path='/Admin/Profile' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <div className="main">
+                <AdminProfile></AdminProfile>
+              </div>
+
+            </div>
+          </>} />
+
+          {/* Modification */}
+
+          <Route path='/Modify/Video' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+
+                <AddVideo></AddVideo>
+              </center>
+            </div>
+
+          </>} />
+          <Route path='/Modify/Video/Add' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+
+                <AddVideo2></AddVideo2>
+              </center>
+            </div>
+
+          </>} />
+          <Route path='/Modify/Subject' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+
+                <AddSubject></AddSubject>
+              </center>
+            </div>
+
+          </>} />
+          <Route path='/Modify/Resource' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+                <AddResources></AddResources>
+              </center>
+            </div>
+
+          </>} />
+          <Route path='/Modify/Subject/Add' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+
+                <AddSubject2></AddSubject2>
+              </center>
+            </div>
+
+          </>} />
+          <Route path='/Modify/Branch' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+
+                <AddBranch></AddBranch>
+              </center>
+            </div>
+
+          </>} />
+          <Route path='/Modify/Unit' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+                <AddUnit></AddUnit>
+              </center>
+            </div>
+
+          </>} />
+          <Route path='/Modify/Unit/Add' exact element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+                <AddUnit2></AddUnit2>
+              </center>
+            </div>
+
+          </>} />
+
+          <Route path='/Modify/Assessment' element={<>
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+
+                <AddAssesment></AddAssesment>
+              </center>
+            </div>
           </>} />
           <Route path='/Modify/Assesment/Add' element={<>
-            <Navbar />
-            <AddAssesment2></AddAssesment2>
-            <Footer />
+            <div className="flex">
+              <SideBar></SideBar>
+              <center className='mx-auto'>
+
+                <AddAssesment2></AddAssesment2>
+              </center>
+            </div>
           </>} />
-
-
         </Routes>
       </Router>
     </>
